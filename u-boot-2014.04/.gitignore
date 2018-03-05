@@ -29,9 +29,6 @@
 # Top-level generic files
 #
 /MLO*
-/SPL
-/System.map
-/u-boot*
 
 #
 # git files that we don't want to ignore even it they are dot-files
@@ -46,10 +43,6 @@
 /LOG
 /errlog
 /reloc_off
-
-!/spl/Makefile
-/spl/*
-/tpl/
 
 #
 # Generated include files

@@ -217,7 +217,7 @@
 
 #define CONFIG_DOS_PARTITION		1
 
-#define CONFIG_SYS_INIT_SP_ADDR	(CONFIG_SYS_LOAD_ADDR - 0x1000000)
+#define CONFIG_SYS_INIT_SP_ADDR	(CONFIG_SYS_LOAD_ADDR + 10000000/*PHYS_SDRAM_1_SIZE*/) /* SP指向内存的最高地址 */
 
 /*
  * Ethernet Contoller driver

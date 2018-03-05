@@ -202,7 +202,7 @@ void menu(unsigned long timestamp, bool recved, char c)
 }
 
 
-
+#define MEM_TEST_START 0x30000000
 
 void board_init_f_spl(void)
 {
@@ -211,6 +211,15 @@ void board_init_f_spl(void)
 	tim4_init();
 	
 	print_clock();
+
+
+	int i;
+	for(i=1; i<1024; i++)
+	{
+		((*(volatile unsigned int *)(MEM_TEST_START+i))) = i;
+		uart_printf("(%d),%X = %d\r\n", i, MEM_TEST_START+i, ((*(volatile unsigned int *)(MEM_TEST_START+i))));
+		delay(100);
+	}
 	
 	//delay(100);
 
