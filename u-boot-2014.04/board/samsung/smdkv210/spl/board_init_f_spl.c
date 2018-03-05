@@ -114,6 +114,21 @@ bool doXmodemDownloading(unsigned long timestamp)
 	return (xModemFSM(timestamp)==XMSTA_STOP);
 }
 
+void copybl2ToRamAndRun(void)
+{
+	unsigned int size_copy, addr_copy;
+	
+	size_copy = (BL2_APP_MAX_SIZE/PAGE_SIZE + (BL2_APP_MAX_SIZE%PAGE_SIZE)>0?1:0)*PAGE_SIZE;
+	addr_copy = BL2_NF_ADDR;
+	
+	while(size_copy)
+	{
+		NF8_ReadPage_8ECC(addr_copy, (unsigned char *)BL2_RAM_ADDR);
+		size_copy -= PAGE_SIZE;
+		addr_copy += PAGE_SIZE;
+	}
+	((BL2_APP)((u32 *)BL2_RAM_ADDR))();
+}
 
 
 typedef enum{MENU_ENTRY=0, MENU_AUTO_BOOT, MENU_CMD, MENU_DOWNLOAD, MENU_BOOT}MENU_STATE;
@@ -186,8 +201,7 @@ void menu(unsigned long timestamp, bool recved, char c)
 		
 		case MENU_BOOT:
 			uart_printf("\r\nbooting...\r\n");
-			NF8_ReadPage_8ECC(BL2_NF_ADDR, (unsigned char *)BL2_RAM_ADDR);
-			((BL2_APP)((u32 *)BL2_RAM_ADDR))();
+			copybl2ToRamAndRun();
 			while(1);
 			break;
 		

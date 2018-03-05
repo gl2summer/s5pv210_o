@@ -2,9 +2,10 @@
 #define __MYBOOT_CFG_H
 
 
-#define BL1_NF_ADDR		0
-#define BL2_NF_ADDR		0x4000
-#define BL2_RAM_ADDR	0x20000000
+#define BL1_NF_ADDR			0
+#define BL2_NF_ADDR			0x4000
+#define BL2_APP_MAX_SIZE	(256 << 10) //256KB
+#define BL2_RAM_ADDR		0x20000000
 
 typedef void (*BL2_APP)(void);
 
