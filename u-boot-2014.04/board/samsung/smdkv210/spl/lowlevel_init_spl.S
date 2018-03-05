@@ -3,7 +3,6 @@
 #include <asm/arch/cpu.h>
 #include <asm/arch/power.h>
 
-
 	.globl lowlevel_init_spl
 lowlevel_init_spl:
 	mov	r9, lr

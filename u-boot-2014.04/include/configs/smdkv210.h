@@ -41,13 +41,13 @@
 #define CONFIG_DISPLAY_BOARDINFO
 
 /* input clock of PLL: SMDKC100 has 12MHz input clock */
-#define CONFIG_SYS_CLK_FREQ		12000000
+#define CONFIG_SYS_CLK_FREQ		24000000
 
 /* DRAM Base */
-#define CONFIG_SYS_SDRAM_BASE		0x30000000
+#define CONFIG_SYS_SDRAM_BASE		0x20000000
 
 /* Text Base */
-#define CONFIG_SYS_TEXT_BASE		0x30000000
+#define CONFIG_SYS_TEXT_BASE		0x20000000
 
 #define CONFIG_SETUP_MEMORY_TAGS
 #define CONFIG_CMDLINE_TAG
@@ -181,7 +181,12 @@
 /* SMDKC100 has 1 banks of DRAM, we use only one in U-Boot */
 #define CONFIG_NR_DRAM_BANKS	1
 #define PHYS_SDRAM_1		CONFIG_SYS_SDRAM_BASE	/* SDRAM Bank #1 */
-#define PHYS_SDRAM_1_SIZE	(512 << 20) /* 512 MB Bank #1 */
+#define PHYS_SDRAM_1_SIZE	(256 << 20) /* 256 MB Bank #1 */
+/*Weiyan-v210内存布局为：
+	DMC0(256MB):0x2000_0000~0x2FFF_FFFF
+	DMC1(256MB):0x4000_0000~0x4FFF_FFFF
+	由于地址不连续，为简化操作，u-boot暂时使用DMC0
+*/
 
 #define CONFIG_SYS_MONITOR_BASE	0x00000000
 
@@ -217,7 +222,7 @@
 
 #define CONFIG_DOS_PARTITION		1
 
-#define CONFIG_SYS_INIT_SP_ADDR	(CONFIG_SYS_LOAD_ADDR + 10000000/*PHYS_SDRAM_1_SIZE*/) /* SP指向内存的最高地址 */
+#define CONFIG_SYS_INIT_SP_ADDR	(CONFIG_SYS_SDRAM_BASE + PHYS_SDRAM_1_SIZE) /* SP指向内存的最高地址 */
 
 /*
  * Ethernet Contoller driver

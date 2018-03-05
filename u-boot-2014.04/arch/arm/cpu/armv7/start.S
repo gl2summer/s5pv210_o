@@ -247,10 +247,10 @@ ENTRY(cpu_init_crit)
 	 * basic memory. Go here to bump up clock rate and handle
 	 * wake up conditions.
 	 */
-#ifndef CONFIG_SPL
-	b	lowlevel_init		@ go setup pll,mux,memory
-#else
+#ifdef CONFIG_SPL_BUILD
 	b	lowlevel_init_spl
+#else
+	b	lowlevel_init		@ go setup pll,mux,memory
 #endif
 
 ENDPROC(cpu_init_crit)

@@ -68,13 +68,14 @@ ENTRY(_main)
 #endif
 #if defined(CONFIG_SPL_BUILD)
 	bl board_init_f_spl
+	b .
 #else
 	bic	sp, sp, #7	/* 8-byte alignment for ABI compliance */
 	sub	sp, sp, #GD_SIZE	/* allocate one GD above SP */
 	bic	sp, sp, #7	/* 8-byte alignment for ABI compliance */
 	mov	r9, sp		/* GD is above SP */
 	mov	r0, #0
-	bl	board_init_f
+	bl	board_init_f	
 #endif
 
 #if ! defined(CONFIG_SPL_BUILD)
