@@ -11,6 +11,7 @@
 obj-y	:= smdkv210.o
 obj-$(CONFIG_SAMSUNG_ONENAND)	+= onenand.o
 obj-y	+= lowlevel_init.o
+obj-y	+= led.o
 
-obj-$(CONFIG_SPL) += spl/
+obj-$(CONFIG_SPL_BUILD) += spl/
 

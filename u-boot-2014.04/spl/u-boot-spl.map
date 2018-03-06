@@ -195,28 +195,25 @@ Discarded input sections
                 0x0000000000000000       0x10 board/samsung/smdkv210/built-in.o
  .text.onenand_board_init
                 0x0000000000000000       0xa0 board/samsung/smdkv210/built-in.o
+ .text.delay.constprop.0
+                0x0000000000000000       0xa0 board/samsung/smdkv210/built-in.o
+ .text.ledm_on  0x0000000000000000       0x38 board/samsung/smdkv210/built-in.o
+ .text.ledm_off
+                0x0000000000000000       0x38 board/samsung/smdkv210/built-in.o
+ .text.ledm_inv
+                0x0000000000000000       0x38 board/samsung/smdkv210/built-in.o
+ .text.ledm_init
+                0x0000000000000000       0x28 board/samsung/smdkv210/built-in.o
  .text.get_char
                 0x0000000000000000       0x24 board/samsung/smdkv210/built-in.o
  .text.put_char
                 0x0000000000000000        0x4 board/samsung/smdkv210/built-in.o
- .text.delay.constprop.0
-                0x0000000000000000       0x50 board/samsung/smdkv210/built-in.o
  .text.led_off  0x0000000000000000       0x38 board/samsung/smdkv210/built-in.o
  .text.led_inv  0x0000000000000000       0x38 board/samsung/smdkv210/built-in.o
  .text.led_init
                 0x0000000000000000       0x28 board/samsung/smdkv210/built-in.o
- .text.read_oob
-                0x0000000000000000       0x70 board/samsung/smdkv210/built-in.o
- .text.nand_read_id
-                0x0000000000000000       0x44 board/samsung/smdkv210/built-in.o
  .text.nand_read_random
                 0x0000000000000000       0x88 board/samsung/smdkv210/built-in.o
- .text.nand_read_oob
-                0x0000000000000000       0x2c board/samsung/smdkv210/built-in.o
- .text.nand_write_page
-                0x0000000000000000       0x70 board/samsung/smdkv210/built-in.o
- .text.nand_read_page_8bit
-                0x0000000000000000      0x1fc board/samsung/smdkv210/built-in.o
  .text.delay    0x0000000000000000       0x50 board/samsung/smdkv210/built-in.o
  .data          0x0000000000000000        0x0 board/samsung/smdkv210/built-in.o
  .bss           0x0000000000000000        0x0 board/samsung/smdkv210/built-in.o
@@ -242,7 +239,7 @@ Linker script and memory map
                 0x0000000000000000                . = 0x0
                 0x0000000000000000                . = ALIGN (0x4)
 
-.text           0x00000000d0020010     0x1ad0
+.text           0x00000000d0020010     0x1f64
                 0x00000000d0020010                __image_copy_start = .
  arch/arm/cpu/armv7/start.o(.text*)
  .text          0x00000000d0020010       0xe0 arch/arm/cpu/armv7/start.o
@@ -256,203 +253,228 @@ Linker script and memory map
  *(.text*)
  .text          0x00000000d00200f0        0xc arch/arm/lib/built-in.o
                 0x00000000d00200f0                _main
- .text          0x00000000d00200fc      0x6a4 board/samsung/smdkv210/built-in.o
+ .text          0x00000000d00200fc      0x5e8 board/samsung/smdkv210/built-in.o
                 0x00000000d00200fc                lowlevel_init
-                0x00000000d0020274                lowlevel_init_spl
-                0x00000000d0020288                sdram_asm_init
-                0x00000000d0020680                clock_asm_init
+                0x00000000d00201b8                lowlevel_init_spl
+                0x00000000d00201cc                sdram_asm_init
+                0x00000000d00205c4                clock_asm_init
  .text.xmGetData
-                0x00000000d00207a0       0x58 board/samsung/smdkv210/built-in.o
-                0x00000000d00207a0                xmGetData
+                0x00000000d00206e4       0x58 board/samsung/smdkv210/built-in.o
+                0x00000000d00206e4                xmGetData
  .text.xmPutData
-                0x00000000d00207f8       0x10 board/samsung/smdkv210/built-in.o
-                0x00000000d00207f8                xmPutData
+                0x00000000d002073c       0x10 board/samsung/smdkv210/built-in.o
+                0x00000000d002073c                xmPutData
  .text.program_tonand
-                0x00000000d0020808       0x40 board/samsung/smdkv210/built-in.o
-                0x00000000d0020808                program_tonand
+                0x00000000d002074c       0x40 board/samsung/smdkv210/built-in.o
+                0x00000000d002074c                program_tonand
  .text.try_program
-                0x00000000d0020848       0x6c board/samsung/smdkv210/built-in.o
-                0x00000000d0020848                try_program
+                0x00000000d002078c       0x6c board/samsung/smdkv210/built-in.o
+                0x00000000d002078c                try_program
  .text.xmCallback
-                0x00000000d00208b4       0x50 board/samsung/smdkv210/built-in.o
-                0x00000000d00208b4                xmCallback
+                0x00000000d00207f8       0x50 board/samsung/smdkv210/built-in.o
+                0x00000000d00207f8                xmCallback
  .text.uart_buff
-                0x00000000d0020904       0x28 board/samsung/smdkv210/built-in.o
-                0x00000000d0020904                uart_buff
+                0x00000000d0020848       0x28 board/samsung/smdkv210/built-in.o
+                0x00000000d0020848                uart_buff
  .text.doXmodemDownloadInit
-                0x00000000d002092c       0x44 board/samsung/smdkv210/built-in.o
-                0x00000000d002092c                doXmodemDownloadInit
+                0x00000000d0020870       0x44 board/samsung/smdkv210/built-in.o
+                0x00000000d0020870                doXmodemDownloadInit
  .text.doXmodemDownloading
-                0x00000000d0020970       0x18 board/samsung/smdkv210/built-in.o
-                0x00000000d0020970                doXmodemDownloading
+                0x00000000d00208b4       0x18 board/samsung/smdkv210/built-in.o
+                0x00000000d00208b4                doXmodemDownloading
  .text.copybl2ToRamAndRun
-                0x00000000d0020988       0x1c board/samsung/smdkv210/built-in.o
-                0x00000000d0020988                copybl2ToRamAndRun
- .text.menu     0x00000000d00209a4      0x188 board/samsung/smdkv210/built-in.o
-                0x00000000d00209a4                menu
+                0x00000000d00208cc       0x1c board/samsung/smdkv210/built-in.o
+                0x00000000d00208cc                copybl2ToRamAndRun
+ .text.bzero    0x00000000d00208e8       0x1c board/samsung/smdkv210/built-in.o
+                0x00000000d00208e8                bzero
+ .text.testNandEcc
+                0x00000000d0020904       0xec board/samsung/smdkv210/built-in.o
+                0x00000000d0020904                testNandEcc
+ .text.checkAppInNand
+                0x00000000d00209f0       0x94 board/samsung/smdkv210/built-in.o
+                0x00000000d00209f0                checkAppInNand
+ .text.print_menu
+                0x00000000d0020a84       0x50 board/samsung/smdkv210/built-in.o
+                0x00000000d0020a84                print_menu
+ .text.menu     0x00000000d0020ad4      0x1a0 board/samsung/smdkv210/built-in.o
+                0x00000000d0020ad4                menu
  .text.board_init_f_spl
-                0x00000000d0020b2c       0x6c board/samsung/smdkv210/built-in.o
-                0x00000000d0020b2c                board_init_f_spl
- .text.pow      0x00000000d0020b98       0x30 board/samsung/smdkv210/built-in.o
-                0x00000000d0020b98                pow
+                0x00000000d0020c74       0x6c board/samsung/smdkv210/built-in.o
+                0x00000000d0020c74                board_init_f_spl
+ .text.pow      0x00000000d0020ce0       0x30 board/samsung/smdkv210/built-in.o
+                0x00000000d0020ce0                pow
  .text.print_clock
-                0x00000000d0020bc8      0x330 board/samsung/smdkv210/built-in.o
-                0x00000000d0020bc8                print_clock
+                0x00000000d0020d10      0x330 board/samsung/smdkv210/built-in.o
+                0x00000000d0020d10                print_clock
  .text.uart_put
-                0x00000000d0020ef8       0x20 board/samsung/smdkv210/built-in.o
- .text.put_hex  0x00000000d0020f18       0x48 board/samsung/smdkv210/built-in.o
+                0x00000000d0021040       0x20 board/samsung/smdkv210/built-in.o
+ .text.put_hex  0x00000000d0021060       0x48 board/samsung/smdkv210/built-in.o
  .text.uart_init
-                0x00000000d0020f60       0x70 board/samsung/smdkv210/built-in.o
-                0x00000000d0020f60                uart_init
+                0x00000000d00210a8       0x70 board/samsung/smdkv210/built-in.o
+                0x00000000d00210a8                uart_init
  .text.try_get_char
-                0x00000000d0020fd0       0x30 board/samsung/smdkv210/built-in.o
-                0x00000000d0020fd0                try_get_char
+                0x00000000d0021118       0x30 board/samsung/smdkv210/built-in.o
+                0x00000000d0021118                try_get_char
  .text.put_chars
-                0x00000000d0021000       0x24 board/samsung/smdkv210/built-in.o
-                0x00000000d0021000                put_chars
+                0x00000000d0021148       0x24 board/samsung/smdkv210/built-in.o
+                0x00000000d0021148                put_chars
  .text.put_string
-                0x00000000d0021024       0x28 board/samsung/smdkv210/built-in.o
-                0x00000000d0021024                put_string
+                0x00000000d002116c       0x28 board/samsung/smdkv210/built-in.o
+                0x00000000d002116c                put_string
  .text.uart_printf
-                0x00000000d002104c      0x1b0 board/samsung/smdkv210/built-in.o
-                0x00000000d002104c                uart_printf
- .text.led_on   0x00000000d00211fc       0x38 board/samsung/smdkv210/built-in.o
-                0x00000000d00211fc                led_on
+                0x00000000d0021194      0x1b0 board/samsung/smdkv210/built-in.o
+                0x00000000d0021194                uart_printf
+ .text.led_on   0x00000000d0021344       0x38 board/samsung/smdkv210/built-in.o
+                0x00000000d0021344                led_on
  .text.nand_wait_ready
-                0x00000000d0021234       0x18 board/samsung/smdkv210/built-in.o
+                0x00000000d002137c       0x18 board/samsung/smdkv210/built-in.o
  .text.nand_select_chip
-                0x00000000d002124c       0x18 board/samsung/smdkv210/built-in.o
+                0x00000000d0021394       0x18 board/samsung/smdkv210/built-in.o
  .text.nand_deselect_chip
-                0x00000000d0021264       0x18 board/samsung/smdkv210/built-in.o
+                0x00000000d00213ac       0x18 board/samsung/smdkv210/built-in.o
  .text.nand_addr
-                0x00000000d002127c       0x34 board/samsung/smdkv210/built-in.o
+                0x00000000d00213c4       0x34 board/samsung/smdkv210/built-in.o
  .text.nand_write_buf
-                0x00000000d00212b0       0x24 board/samsung/smdkv210/built-in.o
+                0x00000000d00213f8       0x24 board/samsung/smdkv210/built-in.o
  .text.nand_init_hwecc_8bit
-                0x00000000d00212d4       0x74 board/samsung/smdkv210/built-in.o
+                0x00000000d002141c       0x74 board/samsung/smdkv210/built-in.o
+ .text.read_oob
+                0x00000000d0021490       0x70 board/samsung/smdkv210/built-in.o
  .text.nand_init
-                0x00000000d0021348       0x70 board/samsung/smdkv210/built-in.o
-                0x00000000d0021348                nand_init
+                0x00000000d0021500       0x70 board/samsung/smdkv210/built-in.o
+                0x00000000d0021500                nand_init
+ .text.nand_read_id
+                0x00000000d0021570       0x44 board/samsung/smdkv210/built-in.o
+                0x00000000d0021570                nand_read_id
  .text.nand_erase
-                0x00000000d00213b8       0x58 board/samsung/smdkv210/built-in.o
-                0x00000000d00213b8                nand_erase
+                0x00000000d00215b4       0x58 board/samsung/smdkv210/built-in.o
+                0x00000000d00215b4                nand_erase
+ .text.nand_read_oob
+                0x00000000d002160c       0x2c board/samsung/smdkv210/built-in.o
+                0x00000000d002160c                nand_read_oob
+ .text.nand_write_page
+                0x00000000d0021638       0x70 board/samsung/smdkv210/built-in.o
+                0x00000000d0021638                nand_write_page
  .text.nand_write_page_8bit
-                0x00000000d0021410      0x138 board/samsung/smdkv210/built-in.o
-                0x00000000d0021410                nand_write_page_8bit
+                0x00000000d00216a8      0x138 board/samsung/smdkv210/built-in.o
+                0x00000000d00216a8                nand_write_page_8bit
+ .text.nand_read_page_8bit
+                0x00000000d00217e0      0x1fc board/samsung/smdkv210/built-in.o
+                0x00000000d00217e0                nand_read_page_8bit
  .text.NF8_ReadPage_8ECC
-                0x00000000d0021548       0x34 board/samsung/smdkv210/built-in.o
-                0x00000000d0021548                NF8_ReadPage_8ECC
+                0x00000000d00219dc       0x34 board/samsung/smdkv210/built-in.o
+                0x00000000d00219dc                NF8_ReadPage_8ECC
  .text.tim4_poll
-                0x00000000d002157c       0x38 board/samsung/smdkv210/built-in.o
-                0x00000000d002157c                tim4_poll
+                0x00000000d0021a10       0x38 board/samsung/smdkv210/built-in.o
+                0x00000000d0021a10                tim4_poll
  .text.tim4_init
-                0x00000000d00215b4       0xa8 board/samsung/smdkv210/built-in.o
-                0x00000000d00215b4                tim4_init
+                0x00000000d0021a48       0xa8 board/samsung/smdkv210/built-in.o
+                0x00000000d0021a48                tim4_init
  .text.dealExceptionFrame
-                0x00000000d002165c       0xbc board/samsung/smdkv210/built-in.o
+                0x00000000d0021af0       0xbc board/samsung/smdkv210/built-in.o
  .text.dealSohFrame
-                0x00000000d0021718      0x104 board/samsung/smdkv210/built-in.o
- .text.xmInit   0x00000000d002181c       0x18 board/samsung/smdkv210/built-in.o
-                0x00000000d002181c                xmInit
- .text.xmStart  0x00000000d0021834       0x14 board/samsung/smdkv210/built-in.o
-                0x00000000d0021834                xmStart
+                0x00000000d0021bac      0x104 board/samsung/smdkv210/built-in.o
+ .text.xmInit   0x00000000d0021cb0       0x18 board/samsung/smdkv210/built-in.o
+                0x00000000d0021cb0                xmInit
+ .text.xmStart  0x00000000d0021cc8       0x14 board/samsung/smdkv210/built-in.o
+                0x00000000d0021cc8                xmStart
  .text.xModemFSM
-                0x00000000d0021848      0x1b8 board/samsung/smdkv210/built-in.o
-                0x00000000d0021848                xModemFSM
- .text.raise    0x00000000d0021a00        0x8 arch/arm/lib/eabi_compat.o
-                0x00000000d0021a00                raise
- .text          0x00000000d0021a08       0xc8 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
-                0x00000000d0021a08                __udivsi3
-                0x00000000d0021a08                __aeabi_uidiv
-                0x00000000d0021ab0                __aeabi_uidivmod
- .text          0x00000000d0021ad0       0x10 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
-                0x00000000d0021ad0                __aeabi_ldiv0
-                0x00000000d0021ad0                __aeabi_idiv0
-                0x00000000d0021ae0                __image_copy_start = .
+                0x00000000d0021cdc      0x1b8 board/samsung/smdkv210/built-in.o
+                0x00000000d0021cdc                xModemFSM
+ .text.raise    0x00000000d0021e94        0x8 arch/arm/lib/eabi_compat.o
+                0x00000000d0021e94                raise
+ .text          0x00000000d0021e9c       0xc8 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
+                0x00000000d0021e9c                __udivsi3
+                0x00000000d0021e9c                __aeabi_uidiv
+                0x00000000d0021f44                __aeabi_uidivmod
+ .text          0x00000000d0021f64       0x10 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
+                0x00000000d0021f64                __aeabi_ldiv0
+                0x00000000d0021f64                __aeabi_idiv0
+                0x00000000d0021f74                __image_copy_start = .
  arch/arm/cpu/armv7/start.o(.text*)
  *(.text*)
 
-.glue_7         0x00000000d0021ae0        0x0
- .glue_7        0x00000000d0021ae0        0x0 linker stubs
+.glue_7         0x00000000d0021f74        0x0
+ .glue_7        0x00000000d0021f74        0x0 linker stubs
 
-.glue_7t        0x00000000d0021ae0        0x0
- .glue_7t       0x00000000d0021ae0        0x0 linker stubs
+.glue_7t        0x00000000d0021f74        0x0
+ .glue_7t       0x00000000d0021f74        0x0 linker stubs
 
-.vfp11_veneer   0x00000000d0021ae0        0x0
- .vfp11_veneer  0x00000000d0021ae0        0x0 linker stubs
+.vfp11_veneer   0x00000000d0021f74        0x0
+ .vfp11_veneer  0x00000000d0021f74        0x0 linker stubs
 
-.v4_bx          0x00000000d0021ae0        0x0
- .v4_bx         0x00000000d0021ae0        0x0 linker stubs
+.v4_bx          0x00000000d0021f74        0x0
+ .v4_bx         0x00000000d0021f74        0x0 linker stubs
 
-.iplt           0x00000000d0021ae0        0x0
- .iplt          0x00000000d0021ae0        0x0 arch/arm/cpu/armv7/start.o
-                0x00000000d0021ae0                . = ALIGN (0x4)
+.iplt           0x00000000d0021f74        0x0
+ .iplt          0x00000000d0021f74        0x0 arch/arm/cpu/armv7/start.o
+                0x00000000d0021f74                . = ALIGN (0x4)
 
-.rodata         0x00000000d0021ae0      0x237
+.rodata         0x00000000d0021f74      0x2ce
  *(SORT(.rodata*))
  .rodata.str1.1
-                0x00000000d0021ae0      0x237 board/samsung/smdkv210/built-in.o
-                                        0x23d (size before relaxing)
+                0x00000000d0021f74      0x2ce board/samsung/smdkv210/built-in.o
+                                        0x2d4 (size before relaxing)
  *(SORT(.rodata*))
-                0x00000000d0021d18                . = ALIGN (0x4)
+                0x00000000d0022244                . = ALIGN (0x4)
 
-.data           0x00000000d0021d18        0x4
+.data           0x00000000d0022244        0x4
  *(.data*)
- .data.auto_boot_timeout.3876
-                0x00000000d0021d18        0x4 board/samsung/smdkv210/built-in.o
+ .data.auto_boot_timeout.3918
+                0x00000000d0022244        0x4 board/samsung/smdkv210/built-in.o
  *(.data*)
 
-.igot.plt       0x00000000d0021d1c        0x0
- .igot.plt      0x00000000d0021d1c        0x0 arch/arm/cpu/armv7/start.o
-                0x00000000d0021d1c                . = ALIGN (0x4)
-                0x00000000d0021d1c                . = .
-                0x00000000d0021d1c                __image_copy_end = .
+.igot.plt       0x00000000d0022248        0x0
+ .igot.plt      0x00000000d0022248        0x0 arch/arm/cpu/armv7/start.o
+                0x00000000d0022248                . = ALIGN (0x4)
+                0x00000000d0022248                . = .
+                0x00000000d0022248                __image_copy_end = .
 
-.rel.dyn        0x00000000d0021d1c        0x0
-                0x00000000d0021d1c                __rel_dyn_start = .
+.rel.dyn        0x00000000d0022248        0x0
+                0x00000000d0022248                __rel_dyn_start = .
  *(.rel*)
- .rel.iplt      0x00000000d0021d1c        0x0 arch/arm/cpu/armv7/start.o
-                0x00000000d0021d1c                __rel_dyn_end = .
-                0x00000000d0021d1c                __rel_dyn_start = .
+ .rel.iplt      0x00000000d0022248        0x0 arch/arm/cpu/armv7/start.o
+                0x00000000d0022248                __rel_dyn_end = .
+                0x00000000d0022248                __rel_dyn_start = .
  *(.rel*)
-                0x00000000d0021d1c                __rel_dyn_end = .
+                0x00000000d0022248                __rel_dyn_end = .
 
 .end
  *(.__end)
  *(.__end)
-                0x00000000d0021d1c                _image_binary_end = .
+                0x00000000d0022248                _image_binary_end = .
 
-.bss            0x00000000d0021d1c      0x940
-                0x00000000d0021d1c                __bss_start = .
+.bss            0x00000000d0022248      0x940
+                0x00000000d0022248                __bss_start = .
  *(.bss*)
  .bss.buff_offset
-                0x00000000d0021d1c        0x4 board/samsung/smdkv210/built-in.o
-                0x00000000d0021d1c                buff_offset
+                0x00000000d0022248        0x4 board/samsung/smdkv210/built-in.o
+                0x00000000d0022248                buff_offset
  .bss.nand_buff
-                0x00000000d0021d20      0x800 board/samsung/smdkv210/built-in.o
-                0x00000000d0021d20                nand_buff
+                0x00000000d002224c      0x800 board/samsung/smdkv210/built-in.o
+                0x00000000d002224c                nand_buff
  .bss.nand_address
-                0x00000000d0022520        0x4 board/samsung/smdkv210/built-in.o
-                0x00000000d0022520                nand_address
- .bss.timestamp_auto_boot.3875
-                0x00000000d0022524        0x4 board/samsung/smdkv210/built-in.o
- .bss.uart_buf  0x00000000d0022528       0x80 board/samsung/smdkv210/built-in.o
-                0x00000000d0022528                uart_buf
- .bss.buf_len   0x00000000d00225a8        0x1 board/samsung/smdkv210/built-in.o
-                0x00000000d00225a8                buf_len
- *fill*         0x00000000d00225a9        0x3 
- .bss.menu_state.3874
-                0x00000000d00225ac        0x4 board/samsung/smdkv210/built-in.o
+                0x00000000d0022a4c        0x4 board/samsung/smdkv210/built-in.o
+                0x00000000d0022a4c                nand_address
+ .bss.timestamp_auto_boot.3917
+                0x00000000d0022a50        0x4 board/samsung/smdkv210/built-in.o
+ .bss.menu_state.3916
+                0x00000000d0022a54        0x4 board/samsung/smdkv210/built-in.o
+ .bss.uart_buf  0x00000000d0022a58       0x80 board/samsung/smdkv210/built-in.o
+                0x00000000d0022a58                uart_buf
+ .bss.buf_len   0x00000000d0022ad8        0x1 board/samsung/smdkv210/built-in.o
+                0x00000000d0022ad8                buf_len
+ *fill*         0x00000000d0022ad9        0x3 
  .bss.g_counter
-                0x00000000d00225b0        0x4 board/samsung/smdkv210/built-in.o
- .bss.xmodem    0x00000000d00225b4       0xa8 board/samsung/smdkv210/built-in.o
-                0x00000000d00225b4                xmodem
-                0x00000000d002265c                . = ALIGN (0x4)
-                0x00000000d002265c                __bss_end = .
-                0x00000000d002265c                __bss_start = .
+                0x00000000d0022adc        0x4 board/samsung/smdkv210/built-in.o
+ .bss.xmodem    0x00000000d0022ae0       0xa8 board/samsung/smdkv210/built-in.o
+                0x00000000d0022ae0                xmodem
+                0x00000000d0022b88                . = ALIGN (0x4)
+                0x00000000d0022b88                __bss_end = .
+                0x00000000d0022b88                __bss_start = .
  *(.bss*)
-                0x00000000d002265c                . = ALIGN (0x4)
-                0x00000000d002265c                __bss_end = .
+                0x00000000d0022b88                . = ALIGN (0x4)
+                0x00000000d0022b88                __bss_end = .
 
 .dynsym
  *(.dynsym)
@@ -531,7 +553,7 @@ OUTPUT(u-boot-spl elf32-littlearm)
 .comment        0x0000000000000000       0x2e
  .comment       0x0000000000000000       0x2e arch/arm/lib/built-in.o
                                          0xeb (size before relaxing)
- .comment       0x000000000000002e      0x1a7 board/samsung/smdkv210/built-in.o
+ .comment       0x000000000000002e      0x1d6 board/samsung/smdkv210/built-in.o
  .comment       0x000000000000002e       0x2f arch/arm/lib/eabi_compat.o
 
 .note.GNU-stack
@@ -547,64 +569,64 @@ OUTPUT(u-boot-spl elf32-littlearm)
  .note.GNU-stack
                 0x0000000000000000        0x0 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
 
-.debug_line     0x0000000000000000     0x1cd9
+.debug_line     0x0000000000000000     0x1df6
  .debug_line    0x0000000000000000       0x8b arch/arm/cpu/armv7/start.o
  .debug_line    0x000000000000008b      0x87e arch/arm/lib/built-in.o
- .debug_line    0x0000000000000909     0x1182 board/samsung/smdkv210/built-in.o
- .debug_line    0x0000000000001a8b      0x131 arch/arm/lib/eabi_compat.o
- .debug_line    0x0000000000001bbc       0x9b /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
- .debug_line    0x0000000000001c57       0x82 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
+ .debug_line    0x0000000000000909     0x129f board/samsung/smdkv210/built-in.o
+ .debug_line    0x0000000000001ba8      0x131 arch/arm/lib/eabi_compat.o
+ .debug_line    0x0000000000001cd9       0x9b /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
+ .debug_line    0x0000000000001d74       0x82 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
 
-.debug_info     0x0000000000000000     0x66c8
+.debug_info     0x0000000000000000     0x6b56
  .debug_info    0x0000000000000000       0x6e arch/arm/cpu/armv7/start.o
  .debug_info    0x000000000000006e     0x1cf1 arch/arm/lib/built-in.o
- .debug_info    0x0000000000001d5f     0x449f board/samsung/smdkv210/built-in.o
- .debug_info    0x00000000000061fe      0x2ea arch/arm/lib/eabi_compat.o
- .debug_info    0x00000000000064e8       0xf0 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
- .debug_info    0x00000000000065d8       0xf0 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
+ .debug_info    0x0000000000001d5f     0x492d board/samsung/smdkv210/built-in.o
+ .debug_info    0x000000000000668c      0x2ea arch/arm/lib/eabi_compat.o
+ .debug_info    0x0000000000006976       0xf0 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
+ .debug_info    0x0000000000006a66       0xf0 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
 
-.debug_abbrev   0x0000000000000000     0x1b5d
+.debug_abbrev   0x0000000000000000     0x1c88
  .debug_abbrev  0x0000000000000000       0x14 arch/arm/cpu/armv7/start.o
  .debug_abbrev  0x0000000000000014      0x81b arch/arm/lib/built-in.o
- .debug_abbrev  0x000000000000082f     0x11ea board/samsung/smdkv210/built-in.o
- .debug_abbrev  0x0000000000001a19      0x11c arch/arm/lib/eabi_compat.o
- .debug_abbrev  0x0000000000001b35       0x14 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
- .debug_abbrev  0x0000000000001b49       0x14 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
+ .debug_abbrev  0x000000000000082f     0x1315 board/samsung/smdkv210/built-in.o
+ .debug_abbrev  0x0000000000001b44      0x11c arch/arm/lib/eabi_compat.o
+ .debug_abbrev  0x0000000000001c60       0x14 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
+ .debug_abbrev  0x0000000000001c74       0x14 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
 
-.debug_aranges  0x0000000000000000      0x530
+.debug_aranges  0x0000000000000000      0x590
  .debug_aranges
                 0x0000000000000000       0x20 arch/arm/cpu/armv7/start.o
  .debug_aranges
                 0x0000000000000020      0x180 arch/arm/lib/built-in.o
  .debug_aranges
-                0x00000000000001a0      0x320 board/samsung/smdkv210/built-in.o
+                0x00000000000001a0      0x380 board/samsung/smdkv210/built-in.o
  .debug_aranges
-                0x00000000000004c0       0x30 arch/arm/lib/eabi_compat.o
+                0x0000000000000520       0x30 arch/arm/lib/eabi_compat.o
  .debug_aranges
-                0x00000000000004f0       0x20 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
+                0x0000000000000550       0x20 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
  .debug_aranges
-                0x0000000000000510       0x20 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
+                0x0000000000000570       0x20 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_dvmd_lnx.o)
 
-.debug_frame    0x0000000000000000      0x94c
+.debug_frame    0x0000000000000000      0xa48
  .debug_frame   0x0000000000000000      0x2b8 arch/arm/lib/built-in.o
- .debug_frame   0x00000000000002b8      0x634 board/samsung/smdkv210/built-in.o
- .debug_frame   0x00000000000008ec       0x40 arch/arm/lib/eabi_compat.o
- .debug_frame   0x000000000000092c       0x20 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
+ .debug_frame   0x00000000000002b8      0x730 board/samsung/smdkv210/built-in.o
+ .debug_frame   0x00000000000009e8       0x40 arch/arm/lib/eabi_compat.o
+ .debug_frame   0x0000000000000a28       0x20 /usr/local/arm-cortex_a8-linux-gnueabi/lib/gcc/arm-cortex_a8-linux-gnueabi/4.9.4/libgcc.a(_udivsi3.o)
 
-.debug_str      0x0000000000000000     0x18fa
+.debug_str      0x0000000000000000     0x196b
  .debug_str     0x0000000000000000      0x7c1 arch/arm/lib/built-in.o
                                        0x1431 (size before relaxing)
- .debug_str     0x00000000000007c1     0x10e3 board/samsung/smdkv210/built-in.o
-                                       0x2513 (size before relaxing)
- .debug_str     0x00000000000018a4       0x56 arch/arm/lib/eabi_compat.o
+ .debug_str     0x00000000000007c1     0x1154 board/samsung/smdkv210/built-in.o
+                                       0x271a (size before relaxing)
+ .debug_str     0x0000000000001915       0x56 arch/arm/lib/eabi_compat.o
                                         0x35c (size before relaxing)
 
-.debug_loc      0x0000000000000000     0x1eca
+.debug_loc      0x0000000000000000     0x20d7
  .debug_loc     0x0000000000000000      0x45a arch/arm/lib/built-in.o
- .debug_loc     0x000000000000045a     0x1a4f board/samsung/smdkv210/built-in.o
- .debug_loc     0x0000000000001ea9       0x21 arch/arm/lib/eabi_compat.o
+ .debug_loc     0x000000000000045a     0x1c5c board/samsung/smdkv210/built-in.o
+ .debug_loc     0x00000000000020b6       0x21 arch/arm/lib/eabi_compat.o
 
-.debug_ranges   0x0000000000000000      0x598
+.debug_ranges   0x0000000000000000      0x5e8
  .debug_ranges  0x0000000000000000      0x108 arch/arm/lib/built-in.o
- .debug_ranges  0x0000000000000108      0x470 board/samsung/smdkv210/built-in.o
- .debug_ranges  0x0000000000000578       0x20 arch/arm/lib/eabi_compat.o
+ .debug_ranges  0x0000000000000108      0x4c0 board/samsung/smdkv210/built-in.o
+ .debug_ranges  0x00000000000005c8       0x20 arch/arm/lib/eabi_compat.o

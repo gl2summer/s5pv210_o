@@ -4,6 +4,7 @@
 
 #define BL1_NF_ADDR			0
 #define BL2_NF_ADDR			0x4000
+#define BL1_APP_MAX_SIZE	(16 << 10)
 #define BL2_APP_MAX_SIZE	(256 << 10) //256KB
 #define BL2_RAM_ADDR		0x20000000
 

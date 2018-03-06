@@ -75,7 +75,8 @@ ENTRY(_main)
 	bic	sp, sp, #7	/* 8-byte alignment for ABI compliance */
 	mov	r9, sp		/* GD is above SP */
 	mov	r0, #0
-	bl	board_init_f	
+	bl	ledm_init
+	bl	board_init_f
 #endif
 
 #if ! defined(CONFIG_SPL_BUILD)

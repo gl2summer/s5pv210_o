@@ -116,24 +116,116 @@ bool doXmodemDownloading(unsigned long timestamp)
 
 void copybl2ToRamAndRun(void)
 {
-	unsigned int size_copy, addr_copy;
+	int size_copy, addr_copy, addr_ram;
 	
 	size_copy = (BL2_APP_MAX_SIZE/PAGE_SIZE + (BL2_APP_MAX_SIZE%PAGE_SIZE)>0?1:0)*PAGE_SIZE;
 	addr_copy = BL2_NF_ADDR;
+	addr_ram  = BL2_RAM_ADDR;
 	
-	while(size_copy)
+	while(size_copy > 0)
 	{
-		NF8_ReadPage_8ECC(addr_copy, (unsigned char *)BL2_RAM_ADDR);
+		NF8_ReadPage_8ECC(addr_copy, (unsigned char *)addr_ram);
+		
 		size_copy -= PAGE_SIZE;
 		addr_copy += PAGE_SIZE;
+		addr_ram  += PAGE_SIZE;
 	}
 	((BL2_APP)((u32 *)BL2_RAM_ADDR))();
 }
 
 
-typedef enum{MENU_ENTRY=0, MENU_AUTO_BOOT, MENU_CMD, MENU_DOWNLOAD, MENU_BOOT}MENU_STATE;
-#define AUTOBOOT_TIMEOUTS 3
+#define TEST_BLOCK_ADDR (1*BLOCK_SIZE)
+void bzero(u8 *s, int size)
+{
+	int i = 0;
+	for (; i < size; i++)
+		s[i] = 0;
+}
+/* 测试：使用Ecc校验写入一页数据，然后将某个位反转后不使用Ecc再此写入，然后使用Ecc校验读出数据 */
+void testNandEcc(void)
+{
+	u32 i,ret;
+	u8 buf[PAGE_SIZE];
+	u8 oob[64];
 
+
+	/* 1.擦除第0块 */
+	nand_erase(TEST_BLOCK_ADDR);
+	
+	for (i = 0; i < PAGE_SIZE; i++)
+	{
+		buf[i] = i&0xff;
+	}
+	
+	uart_printf("begin write data..\r\n");
+	/* 
+	** 2.写入1页数据到0地址(正确数据，全部为0xAA)
+	** 同时将计算出的ECC校验码保存到oob中
+	*/
+	nand_write_page_8bit(buf, TEST_BLOCK_ADDR);
+	nand_read_oob(oob, TEST_BLOCK_ADDR, 64);
+	
+	/* 3.擦除第0块 */
+	nand_erase(TEST_BLOCK_ADDR);
+	
+	/*
+	** 4.将前8个数据的第0位取反(0xAB)，不使用应硬件ECC，将1页数据写入第0页
+	** 同时将上面记录下的ECC写入spare区
+	*/
+	for (i = 0; i < 8; i++)
+		buf[i] ^= 0x01;
+
+	nand_write_page(buf, TEST_BLOCK_ADDR, oob);
+	
+	bzero(buf, PAGE_SIZE);
+
+	/* 5.使用自定义函数或三星提供的8位硬件ECC校验拷贝函数读取一页数据 */
+	//ret = NF8_ReadPage_8ECC(TEST_BLOCK_ADDR, buf);
+	ret = nand_read_page_8bit(buf, TEST_BLOCK_ADDR);
+	
+	uart_printf("ret = %d, addr=0x%X\r\n", ret, TEST_BLOCK_ADDR);
+	/* 打印第一个数据 */
+	for (i = 0; i < 10; i++)
+		uart_printf("%X ", buf[i]);
+	uart_printf("\r\n");
+}
+void checkAppInNand(void)
+{
+	u32 i,ret;
+	u8 buf[PAGE_SIZE];
+	u8 oob[64];
+	u32 addr;
+	
+	uart_printf("SIZE = %d\r\n", BL1_APP_MAX_SIZE+BL2_APP_MAX_SIZE);
+	for(addr=BL1_NF_ADDR; addr<BL1_NF_ADDR+BL1_APP_MAX_SIZE+BL2_APP_MAX_SIZE; addr+=PAGE_SIZE)
+	{
+		ret = NF8_ReadPage_8ECC(addr, buf);
+		//ret = nand_read_page_8bit(buf, addr);
+		
+		uart_printf("ret = %d, addr = 0x%X\r\n", ret, addr);
+		for (i = 0; i < PAGE_SIZE; i++)
+		{
+			if(!(i%16))uart_printf("\r\n");
+			uart_printf("%X ", buf[i]);
+		}
+		uart_printf("\r\n");
+	}
+}
+
+
+
+typedef enum{MENU_ENTRY=0, MENU_AUTO_BOOT, MENU_CMD, MENU_DOWNLOAD, MENU_BOOT}MENU_STATE;
+#define AUTOBOOT_TIMEOUTS 5
+
+void print_menu(void)
+{
+	uart_printf("\r\n\r\n---------------- boot menu, please input your command: ----------------\r\n");
+	uart_printf(">> D: download myboot(SPL+uboot) into nandflash(uart2, xModem, 0)\r\n");
+	uart_printf(">> B: start uboot\r\n");
+	uart_printf(">> N: test nand with ecc\r\n");
+	uart_printf(">> C: readback nand(BL1+BL2)\r\n");
+	uart_printf("\r\n");
+}
 
 void menu(unsigned long timestamp, bool recved, char c)
 {
@@ -146,10 +238,7 @@ void menu(unsigned long timestamp, bool recved, char c)
 		case MENU_AUTO_BOOT:
 			if(recved)
 			{
-				uart_printf("\r\n\r\n---------------- boot menu, please input your command: ----------------\r\n");
-				uart_printf(">> D: download myboot(spl+uboot) into nandflash(uart2, xModem, 0)\r\n");
-				uart_printf(">> B: start uboot\r\n");
-				uart_printf("\r\n");
+				print_menu();
 				menu_state = MENU_CMD;
 				break;
 			}
@@ -163,17 +252,20 @@ void menu(unsigned long timestamp, bool recved, char c)
 			if(timestamp_auto_boot==0)
 			{
 				timestamp_auto_boot = timestamp;
-				uart_printf("\rauto boot in %d second...", auto_boot_timeout);
+				uart_printf("\rAuto boot in %d second...", auto_boot_timeout);
 			}
 			if(timestamp - timestamp_auto_boot >= 1000)
 			{
 				auto_boot_timeout--;
 				timestamp_auto_boot = timestamp;
-				uart_printf("\rauto boot in %d second...", auto_boot_timeout);
+				uart_printf("\rAuto boot in %d second...", auto_boot_timeout);
 			}
 			break;
 			
 		case MENU_CMD:
+			if(!recved)
+				break;
+				
 			switch(c)
 			{
 				case 'd':
@@ -187,6 +279,14 @@ void menu(unsigned long timestamp, bool recved, char c)
 					menu_state = MENU_BOOT;
 				break;
 				
+				case 'n':
+				case 'N':
+					testNandEcc();
+					break;
+				case 'c':
+				case 'C':
+					checkAppInNand();
+					break;
 				default:
 				break;
 			}
@@ -194,20 +294,25 @@ void menu(unsigned long timestamp, bool recved, char c)
 		
 		case MENU_DOWNLOAD:
 			if(recved)
+			{
 				uart_buff(c);
+			}
 			if(doXmodemDownloading(timestamp))
+			{
+				print_menu();
 				menu_state = MENU_CMD;
+			}
 			break;
 		
 		case MENU_BOOT:
-			uart_printf("\r\nbooting...\r\n");
+			uart_printf("\r\nBooting...\r\n");
 			copybl2ToRamAndRun();
 			while(1);
 			break;
 		
 		case MENU_ENTRY:
 		default:
-			uart_printf("Going to auto boot, press any to cancel!\r\n");
+			uart_printf("Going to auto boot, press any KEY to cancel!\r\n");
 			menu_state = MENU_AUTO_BOOT;
 			timestamp_auto_boot = 0;
 			auto_boot_timeout = AUTOBOOT_TIMEOUTS;
@@ -224,11 +329,14 @@ void board_init_f_spl(void)
 	nand_init();
 	tim4_init();
 
-
 	print_clock();
 	led_on();
 
-#if 1
+	u8 id[5];
+	nand_read_id(id);
+	uart_printf("nand id: %X%X%X%X%X\r\n", id[0],id[1],id[2],id[3],id[4]);
+	
+#if 0
 	int i;
 	volatile unsigned int *p = (volatile unsigned int *)(MEM_TEST_START);
 	for(i=0; i<1024; i++)
