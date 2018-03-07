@@ -12,6 +12,8 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
+/* #define DEBUG */
+
 /*
  * High Level Configuration Options
  * (easy to change)
@@ -76,13 +78,20 @@
  ***********************************************************/
 #include <config_cmd_default.h>
 
+#define CONFIG_CMDLINE_EDITING
+#define CONFIG_AUTO_COMPLETE
+#define CONFIG_CMD_BOOTMENU
+#define CONFIG_MENU
+#define CONFIG_AUTOBOOT_KEYED
+#define CONFIG_MENU_SHOW
 #undef CONFIG_CMD_FLASH
 #undef CONFIG_CMD_IMLS
 #undef CONFIG_CMD_NAND
 
 #define CONFIG_CMD_CACHE
 #define CONFIG_CMD_REGINFO
-#define CONFIG_CMD_ONENAND
+/* #define CONFIG_CMD_ONENAND */
+#define CONFIG_CMD_NAND
 #define CONFIG_CMD_ELF
 #define CONFIG_CMD_FAT
 #define CONFIG_CMD_MTDPARTS
@@ -91,15 +100,21 @@
 
 #define CONFIG_ZERO_BOOTDELAY_CHECK
 
+#define CONFIG_SYS_MAX_NAND_DEVICE 	1
+#define CONFIG_SYS_NAND_BASE		0xB0E00000
+#define CONFIG_NAND_S5PV210
+#define CONFIG_S5PV210_NAND_HWECC
+#define	CONFIG_SYS_NAND_ECCSIZE		512
+#define CONFIG_SYS_NAND_ECCBYTES	13
 #define CONFIG_MTD_DEVICE
 #define CONFIG_MTD_PARTITIONS
 
-#define MTDIDS_DEFAULT		"onenand0=s3c-onenand"
-#define MTDPARTS_DEFAULT	"mtdparts=s3c-onenand:256k(bootloader)"\
+#define MTDIDS_DEFAULT		"nand0=s5p-nand"
+#define MTDPARTS_DEFAULT	"mtdparts=s5p-nand:256k(bootloader)"\
 				",128k@0x40000(params)"\
-				",3m@0x60000(kernel)"\
-				",16m@0x360000(test)"\
-				",-(UBI)"
+				",2m@0x60000(log)"\
+				",3m@0x260000(kernel)"\
+				",-(rootfs)"
 
 #define NORMAL_MTDPARTS_DEFAULT MTDPARTS_DEFAULT
 
@@ -167,7 +182,7 @@
  */
 #define CONFIG_SYS_LONGHELP		/* undef to save memory */
 #define CONFIG_SYS_HUSH_PARSER		/* use "hush" command parser	*/
-#define CONFIG_SYS_PROMPT		"SMDKC100 # "
+#define CONFIG_SYS_PROMPT		"SMDKV210 # "
 #define CONFIG_SYS_CBSIZE	256	/* Console I/O Buffer Size */
 #define CONFIG_SYS_PBSIZE	384	/* Print Buffer Size */
 #define CONFIG_SYS_MAXARGS	16	/* max number of command args */
@@ -196,7 +211,7 @@
 #define CONFIG_SYS_NO_FLASH		1
 
 #define CONFIG_SYS_MONITOR_LEN		(256 << 10)	/* 256 KiB */
-#define CONFIG_IDENT_STRING		" for SMDKC100"
+#define CONFIG_IDENT_STRING		" for SMDKV210"
 
 #if !defined(CONFIG_NAND_SPL) && (CONFIG_SYS_TEXT_BASE >= 0xc0000000)
 #define CONFIG_ENABLE_MMU
@@ -211,7 +226,7 @@
 /*-----------------------------------------------------------------------
  * Boot configuration
  */
-#define CONFIG_ENV_IS_IN_ONENAND	1
+#define CONFIG_ENV_IS_IN_NAND	1
 #define CONFIG_ENV_SIZE			(128 << 10)	/* 128KiB, 0x20000 */
 #define CONFIG_ENV_ADDR			(256 << 10)	/* 256KiB, 0x40000 */
 #define CONFIG_ENV_OFFSET		(256 << 10)	/* 256KiB, 0x40000 */

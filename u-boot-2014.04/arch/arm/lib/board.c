@@ -287,10 +287,12 @@ void board_init_f(ulong bootflag)
 						(uintptr_t)gd->fdt_blob);
 
 	for (init_fnc_ptr = init_sequence; *init_fnc_ptr; ++init_fnc_ptr) {
+
 		if ((*init_fnc_ptr)() != 0) {
 			hang ();
 		}
 	}
+	printf("init_sequence finished\r\n");
 
 #ifdef CONFIG_OF_CONTROL
 	/* For now, put this check after the console is ready */
