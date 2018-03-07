@@ -32,7 +32,6 @@ void try_program(unsigned char *buffer, unsigned int buffer_len, bool bfinish)
 	if(bfinish)
 	{
 		program_tonand();
-		uart_printf("finished!\n");
 		return ;
 	}
 	
@@ -108,20 +107,21 @@ void doXmodemDownloadInit(u32 base_addr)
 	nand_address = base_addr;
 }
 
-/*return true when exit*/
+/*return true when downloading*/
 bool doXmodemDownloading(unsigned long timestamp)
 {
-	return (xModemFSM(timestamp)==XMSTA_STOP);
+	return (xModemFSM(timestamp)!=XMSTA_STOP);
 }
 
 void copybl2ToRamAndRun(void)
 {
 	int size_copy, addr_copy, addr_ram;
 	
-	size_copy = (BL2_APP_MAX_SIZE/PAGE_SIZE + (BL2_APP_MAX_SIZE%PAGE_SIZE)>0?1:0)*PAGE_SIZE;
+	size_copy = (BL2_APP_MAX_SIZE/PAGE_SIZE + ((BL2_APP_MAX_SIZE%PAGE_SIZE)>0?1:0))*PAGE_SIZE;
 	addr_copy = BL2_NF_ADDR;
 	addr_ram  = BL2_RAM_ADDR;
 	
+	uart_printf("size_copy=%d,BL2_nf_addr=0x%X,BL2_ram_addr=0x%X\r\n", size_copy, addr_copy, addr_ram);
 	while(size_copy > 0)
 	{
 		NF8_ReadPage_8ECC(addr_copy, (unsigned char *)addr_ram);
@@ -146,7 +146,7 @@ void testNandEcc(void)
 {
 	u32 i,ret;
 	u8 buf[PAGE_SIZE];
-	u8 oob[64];
+	u8 oob[OOB_SIZE];
 
 
 	/* 1.擦除第0块 */
@@ -163,7 +163,7 @@ void testNandEcc(void)
 	** 同时将计算出的ECC校验码保存到oob中
 	*/
 	nand_write_page_8bit(buf, TEST_BLOCK_ADDR);
-	nand_read_oob(oob, TEST_BLOCK_ADDR, 64);
+	nand_read_oob(oob, TEST_BLOCK_ADDR, OOB_SIZE);
 	
 	/* 3.擦除第0块 */
 	nand_erase(TEST_BLOCK_ADDR);
@@ -193,11 +193,10 @@ void checkAppInNand(void)
 {
 	u32 i,ret;
 	u8 buf[PAGE_SIZE];
-	u8 oob[64];
 	u32 addr;
 	
-	uart_printf("SIZE = %d\r\n", BL1_APP_MAX_SIZE+BL2_APP_MAX_SIZE);
-	for(addr=BL1_NF_ADDR; addr<BL1_NF_ADDR+BL1_APP_MAX_SIZE+BL2_APP_MAX_SIZE; addr+=PAGE_SIZE)
+	uart_printf("SIZE = %d\r\n", BL1_APP_SIZE+BL2_APP_MAX_SIZE);
+	for(addr=BL1_NF_ADDR; addr<BL1_NF_ADDR+BL1_APP_SIZE+BL2_APP_MAX_SIZE; addr+=PAGE_SIZE)
 	{
 		ret = NF8_ReadPage_8ECC(addr, buf);
 		//ret = nand_read_page_8bit(buf, addr);
@@ -297,14 +296,16 @@ void menu(unsigned long timestamp, bool recved, char c)
 			{
 				uart_buff(c);
 			}
-			if(doXmodemDownloading(timestamp))
+			if(!doXmodemDownloading(timestamp))
 			{
+				uart_printf("program finished!\n");
 				print_menu();
 				menu_state = MENU_CMD;
 			}
 			break;
 		
 		case MENU_BOOT:
+			led_off();
 			uart_printf("\r\nBooting...\r\n");
 			copybl2ToRamAndRun();
 			while(1);

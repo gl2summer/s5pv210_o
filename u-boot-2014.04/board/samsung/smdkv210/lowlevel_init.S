@@ -19,7 +19,10 @@
 
 	.globl lowlevel_init
 lowlevel_init:
+
 	mov	r9, lr
+
+	bl led_flash
 
 	/* r5 has always zero */
 	mov	r5, #0
@@ -61,11 +64,71 @@ lowlevel_init:
 	ldr	r1, =0x00000022
 	str	r1, [r0, #0x20]			@ GPA1_CON
 
+	/* LED ON */
+	ldr	r0, =0xE0200C40 		@GPH2CON
+	ldr r1, [r0]
+	ldr r2, =(0xFFFF<<16)
+	bic r1, r1, r2
+	ldr r2, =(0x1111<<16)
+	orr r1, r1, r2
+	str	r1, [r0]
+	
+	ldr	r0, =0xE0200C44			@GPH2DAT
+	ldr r1, [r0]
+	orr r1, r1, #0xFF
+	str	r1, [r0]
+	
 	/* for TZPC */
 	/* bl tzpc_asm_init */
 
-1:
 	mov	lr, r9
+	mov	pc, lr
+
+
+
+
+
+/* 
+ * for debug indication
+ */
+led_flash:
+	ldr r5, =10
+	/* LED */
+	ldr	r0, =0xE0200C40 		@GPH2CON
+	ldr r1, [r0]
+	ldr r2, =(0xFFFF<<16)
+	bic r1, r1, r2
+	ldr r2, =(0x1111<<16)
+	orr r1, r1, r2
+	str	r1, [r0]
+
+flash:
+	ldr	r0, =0xE0200C44			@GPH2DAT
+	ldr r1, [r0]
+	bic r1, r1, #0xFF
+	str	r1, [r0]
+
+	ldr r3, =20000000
+1:
+	sub r3, r3, #1
+	cmp r3, #0
+	bne 1b
+
+	ldr	r0, =0xE0200C44			@GPH2DAT
+	ldr r1, [r0]
+	orr r1, r1, #0xFF
+	str	r1, [r0]
+	
+	ldr r3, =20000000
+2:
+	sub r3, r3, #1
+	cmp r3, #0
+	bne 2b
+
+	sub r5, r5, #1
+	cmp r5, #0
+	bne flash
+	
 	mov	pc, lr
 
 
@@ -90,3 +153,4 @@ tzpc_asm_init:
 	str	r1, [r0, #0x810]
 
 	mov	pc, lr
+

@@ -248,9 +248,10 @@ ENTRY(cpu_init_crit)
 	 * wake up conditions.
 	 */
 #ifdef CONFIG_SPL_BUILD
-	b	lowlevel_init_spl
+	b	lowlevel_init_spl		@ go setup pll,mux,memory
 #else
-	b	lowlevel_init		@ go setup pll,mux,memory
+
+	b	lowlevel_init
 #endif
 
 ENDPROC(cpu_init_crit)
